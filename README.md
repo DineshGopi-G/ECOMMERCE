@@ -26,3 +26,7 @@
 <p align="center">
   <img src="Source/landing-page.jpg" alt="GoShop Landing Page" width="800"/>
 </p>
+
+<p align="center">
+  <img src="Source/collage.png" alt="GoShop Screenshots" width="900"/>
+</p>
