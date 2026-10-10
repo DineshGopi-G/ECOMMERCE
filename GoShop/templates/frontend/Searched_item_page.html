@@ -1,0 +1,205 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block contact_css %}
+<link rel="stylesheet" href="{% static 'css/Product_List_page.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Breadcrumb Section -->
+<section class="breadcrumb-section">
+    <div class="custom-container">
+        <div class="d-flex justify-content-between align-items-center">
+
+            <div class="breadcrumb-nav">
+                <a href="{% url 'Home' %}">Home</a>
+
+                <i class="fa-solid fa-chevron-right"></i>
+
+                <span>Search</span>
+
+                {% if query %}
+                <i class="fa-solid fa-chevron-right"></i>
+
+                <span class="active-query">
+                    "{{ query }}"
+                </span>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Product Section -->
+<section class="pb-5">
+    <div class="custom-container">
+
+        <div class="products-layout-wrapper sidebar-hidden"
+             id="productsWrapper">
+
+            <!-- Products Area -->
+            <main class="products-grid-area">
+
+                <!-- Product Grid -->
+                <div class="row custom-row"
+                     id="productGrid">
+
+                    {% for i in pro %}
+
+                    <div class="col-grid-5 mb-4">
+
+                        <div class="product-card"
+                             onclick="location.href='{% url 'Selected_Product' i.id %}'"
+                             style="cursor:pointer;">
+
+                            <!-- Product Image -->
+                            <div class="product-img-wrapper">
+
+                                <!-- Wishlist Button -->
+                                <form method="POST"
+                                      action="{% url 'toggle_like' i.id %}">
+                                    {% csrf_token %}
+
+                                    <button type="submit"
+                                            class="wishlist-btn {% if i.id in liked_products %}is-liked{% endif %}"
+                                            onclick="event.stopPropagation();">
+
+                                        {% if i.id in liked_products %}
+                                        <i class="fa-solid fa-heart"></i>
+                                        {% else %}
+                                        <i class="fa-regular fa-heart"></i>
+                                        {% endif %}
+
+                                    </button>
+                                </form>
+
+                                <!-- Main Image -->
+                                <img src="{{ i.image.url }}"
+                                     alt="{{ i.name }}"
+                                     class="product-img img-base"
+                                     onerror="this.src='https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=500&q=80'">
+
+                                <!-- Hover Image -->
+                                <img src="{{ i.image_1.url }}"
+                                     alt="Hover Product"
+                                     class="product-img img-hover">
+
+                                <div class="img-overlay"></div>
+
+                            </div>
+
+                            <!-- Product Info -->
+                            <div class="product-info">
+
+                                <!-- Product Name -->
+                                <h3 class="product-title">
+                                    {{ i.name }}
+                                </h3>
+
+                                <!-- Product Description -->
+                                <p class="product-desc">
+                                    {{ i.description }}
+                                </p>
+
+                                <!-- Rating -->
+                                <div class="rating">
+
+                                    <i class="fa-solid fa-star"></i>
+
+                                    4.7
+
+                                    <span class="stock-info ms-2 text-muted">
+                                        ({{ i.quantity }} in stock)
+                                    </span>
+
+                                </div>
+
+                                <!-- Price -->
+                                <div class="price-row mt-2">
+
+                                    <div class="price">
+                                        ₹{{ i.selling_price }}
+                                    </div>
+
+                                    {% if i.trending == 1 %}
+                                    <div class="hot-badge">
+
+                                        <i class="fa-solid fa-fire"></i>
+
+                                        Hot
+
+                                    </div>
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% empty %}
+
+                    <!-- Empty State -->
+                    <div class="col-12 text-center py-5">
+
+                        <div class="empty-search-container py-4">
+
+                            <div class="empty-icon-wrapper mb-4">
+
+                                <div class="pulsing-search-icon">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+
+                            </div>
+
+                            <h3 class="fw-bold text-dark mb-2">
+                                No Products Found
+                            </h3>
+
+                            <p class="text-muted mx-auto"
+                               style="max-width:480px;">
+
+                                We couldn't find any products matching your search.
+
+                            </p>
+
+                            <div class="mt-4 d-flex justify-content-center gap-3 flex-wrap">
+
+                                <a href="{% url 'Searched_item' %}"
+                                   class="btn btn-primary btn-premium-pill px-4 py-2">
+
+                                    <i class="fa-solid fa-rotate-left me-2"></i>
+
+                                    Reset Search
+
+                                </a>
+
+                                <a href="{% url 'Home' %}"
+                                   class="btn btn-outline-secondary btn-premium-pill px-4 py-2">
+
+                                    Back to Home
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,157 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-3">
+
+    <!-- Messages Section -->
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == 'error' %}
+    <div class="alert alert-dismissible fade show"
+        style="color: white; background-color: red; padding:10px 20px; margin-bottom:10px; border-radius:5px;"
+        role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% elif message.tags == 'success' %}
+    <div class="alert alert-dismissible fade show"
+        style="color: white; background-color: green; padding:10px 20px; margin-bottom:10px; border-radius:5px;"
+        role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% else %}
+    <div class="alert alert-dismissible fade show"
+        style="color: white; background-color: blue; padding:10px 20px; margin-bottom:10px; border-radius:5px;"
+        role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    {% if product %}
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'Home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'product' product.category.name %}">Collection</a></li>
+            <li class="breadcrumb-item active">{{ product.name }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+
+        <!-- LEFT SIDE -->
+        <div class="col-md-5">
+            <div class="card shadow position-relative">
+                {% if product.trending %}
+                <span
+                    style="position:absolute; top:0; right:0; background:red; color:white; padding:3px 8px; font-size:20px; border-bottom-left-radius:5px;">
+                    Hot
+                </span>
+                {% endif %}
+                <img src="{{ product.image.url }}" class="img-fluid rounded">
+            </div>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="col-md-7">
+            <h2 class="mb-3">
+                {{ product.name }}
+
+                <!-- ❤️ LIKE BUTTON -->
+                <form method="POST" action="{% url 'toggle_like' product.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="border:none; background:none; cursor:pointer;">
+                        <span style="font-size:28px;">
+                            {% if product.id in liked_products %}
+                            ❤️
+                            {% else %}
+                            🤍
+                            {% endif %}
+                        </span>
+                    </button>
+                </form>
+            </h2>
+
+            <p><strong>Vendor:</strong> {{ product.vendor }}</p>
+            <p><strong>Description:</strong> {{ product.description }}</p>
+
+            <h4>
+                ₹{{ product.selling_price }}
+                <small class="text-muted text-decoration-line-through">
+                    ₹{{ product.orginal_price }}
+                </small>
+            </h4>
+
+            <p>
+                <strong>Available:</strong>
+                {% if product.quantity > 0 %}
+                <span class="text-success">In Stock</span>
+                {% else %}
+                <span class="text-danger">Out of Stock</span>
+                {% endif %}
+            </p>
+
+            {% if product.quantity > 0 %}
+            <form action="{% url 'add_Cart' product.id %}" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label>Quantity:</label>
+                    <input type="number" name="quantity" value="1" min="1" max="{{ product.quantity }}">
+                </div>
+                <input type="submit" class="btn btn-primary" value="Add to Cart">
+            </form>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- RELATED PRODUCTS -->
+    <div class="container mt-5">
+        <h4>Related Products</h4>
+        <div class="row">
+            {% for item in related %}
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm">
+                    <img src="{{ item.image.url }}" class="card-img-top" style="height:200px; object-fit:cover;">
+
+                    <div class="card-body">
+                        <h6>{{ item.name }}</h6>
+                        <p>{{ item.description|truncatechars:50 }}</p>
+
+                        <!-- ❤️ LIKE BUTTON -->
+                        <form method="POST" action="{% url 'toggle_like' item.id %}">
+                            {% csrf_token %}
+                            <button type="submit" style="border:none; background:none;">
+                                <span style="font-size:20px;">
+                                    {% if item.id in liked_products %}
+                                    ❤️
+                                    {% else %}
+                                    🤍
+                                    {% endif %}
+                                </span>
+                            </button>
+                        </form>
+
+                        <a href="{% url 'product_page' item.id %}" class="btn btn-sm btn-primary mt-2">
+                            View
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% else %}
+    <p>There is no product.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block Product_List_Page_CSS %}
+<link rel="stylesheet" href="{% static 'css/Auth_pages.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>Create Account</h2>
+            <p>Join GoShop for the best shopping experience</p>
+        </div>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            
+            {% if form.errors %}
+                <div class="error-container">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="auth-form-group">
+                <label class="auth-label">Username</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <small class="text-danger">{{ form.username.errors.0 }}</small>
+                {% endif %}
+            </div>
+
+            <div class="auth-form-group">
+                <label class="auth-label">Password</label>
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                    <small class="text-danger">{{ form.password1.errors.0 }}</small>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="auth-submit-btn">
+                Create My Account
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            Already have an account? <a href="{% url 'login' %}">Login</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

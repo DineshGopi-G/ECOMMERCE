@@ -1,0 +1,145 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block Product_List_Page_CSS %}
+<link rel="stylesheet" href="{% static 'css/tracking_page.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="tracking-section">
+    <div class="custom-container">
+        <!-- Breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'Home' %}" style="text-decoration: none; color: #64748b;">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page" style="color: #7c3aed; font-weight: 500;">Order Tracking</li>
+            </ol>
+        </nav>
+
+        <div class="d-flex justify-content-between align-items-end mb-5">
+            <div>
+                <h1 class="fw-bold mb-2" style="color: #1e293b; letter-spacing: -1px;">Track Your Orders</h1>
+                <p class="text-muted mb-0">Stay updated on your deliveries in real-time</p>
+            </div>
+            <a href="{% url 'Category' %}" class="btn btn-outline-primary rounded-pill px-4">
+                <i class="fa-solid fa-cart-plus me-2"></i> Shop More
+            </a>
+        </div>
+
+        <div class="row g-4">
+            {% for d in tracking %}
+            <div class="col-lg-6">
+                <div class="tracking-card {% if d.color == 4 %}is-cancelled-card{% endif %}">
+                    <div class="row g-0 h-100">
+                        <!-- Product Image Column -->
+                        <div class="col-md-5">
+                            <div class="tracking-product-img">
+                                {% if d.product and d.product.image %}
+                                <img src="{{ d.product.image.url }}" alt="{{ d.product.name }}">
+                                {% else %}
+                                <div class="d-flex align-items-center justify-content-center h-100 bg-light text-muted">
+                                    <i class="fa-solid fa-image fa-3x"></i>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Details Column -->
+                        <div class="col-md-7">
+                            <div class="tracking-details-content">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div>
+                                        <h5 class="fw-bold mb-1" style="color: #1e293b;">{{ d.product.name }}</h5>
+                                        <span class="badge bg-light text-dark border" style="font-size: 0.7rem;">ID: #GS-{{ d.id }}</span>
+                                    </div>
+                                    <button class="btn-cancel-mini" data-bs-toggle="modal" data-bs-target="#cancelModal{{ d.id }}" title="Cancel Order">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                </div>
+
+                                <div class="user-info-mini pb-2 mb-3 border-bottom">
+                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                        <i class="fa-solid fa-user-tag text-muted" style="font-size: 0.8rem;"></i>
+                                        <strong>{{ d.shipping_address.full_name }}</strong>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                        <i class="fa-solid fa-phone text-muted" style="font-size: 0.8rem;"></i>
+                                        <span>{{ d.shipping_address.phone }}</span>
+                                    </div>
+                                    <div class="d-flex align-items-start gap-2">
+                                        <i class="fa-solid fa-location-dot text-muted mt-1" style="font-size: 0.8rem;"></i>
+                                        <span class="x-small">{{ d.shipping_address.address }}, {{ d.shipping_address.city }}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Stepper Logic -->
+                                <div class="stepper-wrapper {% if d.color == 4 %}is-cancelled{% endif %}">
+                                    {% if d.color == 4 %}
+                                        <div class="cancelled-badge">
+                                            <i class="fa-solid fa-circle-xmark me-2"></i> Order Cancelled
+                                        </div>
+                                    {% else %}
+                                        <!-- Step 1: Placed -->
+                                        <div class="stepper-item {% if d.color >= 1 %}completed{% endif %}">
+                                            <div class="step-counter"><i class="fa-solid fa-receipt"></i></div>
+                                            <div class="step-name">Placed</div>
+                                        </div>
+
+                                        <!-- Step 2: Shipped -->
+                                        <div class="stepper-item {% if d.color >= 2 %}completed{% elif d.color == 1 %}active{% endif %}">
+                                            <div class="step-counter"><i class="fa-solid fa-truck-fast"></i></div>
+                                            <div class="step-name">Shipped</div>
+                                        </div>
+
+                                        <!-- Step 3: Delivered -->
+                                        <div class="stepper-item {% if d.color >= 3 %}completed{% elif d.color == 2 %}active{% endif %}">
+                                            <div class="step-counter"><i class="fa-solid fa-house-chimney-check"></i></div>
+                                            <div class="step-name">Delivered</div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="meta-info-bar">
+                                    <span>Est. Delivery: <strong>{% if d.color == 3 %}Today{% else %}3-4 Days{% endif %}</strong></span>
+                                    <span>Courier: <strong>{% if d.id|divisibleby:2 %}BlueDart{% else %}Delhivery{% endif %}</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cancel Confirmation Modal -->
+            <div class="modal fade" id="cancelModal{{ d.id }}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0 shadow-lg" style="border-radius: 24px;">
+                        <div class="modal-body text-center p-5">
+                            <div class="mb-4" style="font-size: 3.5rem; color: #f43f5e;">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">Cancel this order?</h4>
+                            <p class="text-muted mb-5">This will permanently remove the item from your tracking list. Do you wish to proceed?</p>
+                            <div class="d-flex gap-3">
+                                <button type="button" class="btn btn-light flex-grow-1 py-3 fw-bold" data-bs-dismiss="modal" style="border-radius: 14px;">No, keep it</button>
+                                <a href="{% url 'tracking_cancle' d.id %}" class="btn btn-danger flex-grow-1 py-3 fw-bold" style="border-radius: 14px; background: #f43f5e;">Yes, Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="empty-state">
+                    <i class="fa-solid fa-box-open"></i>
+                    <h2 class="fw-bold" style="color: #1e293b;">No Active Orders</h2>
+                    <p class="text-muted mb-4">You don't have any orders being tracked at the moment.</p>
+                    <a href="{% url 'Category' %}" class="btn btn-primary px-5 py-3 rounded-pill fw-bold" style="background: #7c3aed; border: none;">
+                        Start Shopping
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

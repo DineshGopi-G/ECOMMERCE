@@ -1,0 +1,160 @@
+/* <!-- Custom Grid Containers --> */
+:root {
+    --primary-color: #7C3AED;
+    --primary-hover: #6D28D9;
+    --dark-color: #111827;
+    --light-bg: #F9FAFB;
+    --white: #FFFFFF;
+    --gray-400: #9CA3AF;
+    --gray-600: #4B5563;
+    --gutter-width: 24px;
+    --container-margin: 80px;
+    --transition-speed: 0.3s;
+}
+
+/* <!-- Page Transition Styling --> */
+body {
+    background: #F9FAFB !important; /* Fixed background to prevent white flash */
+    opacity: 1 !important;
+    overflow-x: hidden;
+}
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    opacity: 1 !important;
+}
+
+.custom-container {
+    width: 100%;
+    max-width: 1440px; /* Standard Figma Desktop width */
+    margin: 0 auto;
+    margin-top: 0px;
+    padding-left: var(--container-margin);
+    padding-right: var(--container-margin);
+}
+
+.row {
+    --bs-gutter-x: var(--gutter-width);
+}
+
+@media (max-width: 1200px) {
+    :root { --container-margin: 40px; --gutter-width: 20px; }
+}
+
+@media (max-width: 768px) {
+    :root { --container-margin: 20px; --gutter-width: 16px; }
+}
+
+.category-fixed-container {
+    max-width: 1157px;
+    margin: 0 auto;
+    padding: 0 15px;
+    position: relative;
+}
+
+/* Row Gutter Adjustment */
+.custom-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: calc(var(--gutter-width) / -2);
+    margin-left: calc(var(--gutter-width) / -2);
+}
+
+.custom-col {
+    padding-right: calc(var(--gutter-width) / 2);
+    padding-left: calc(var(--gutter-width) / 2);
+}
+
+/* <!-- Navbar & Header --> */
+.top-header {
+    background: var(--white);
+    padding: 4px 0; /* Further reduced from 6px */
+    padding-top: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.search-bar {
+    position: relative;
+    max-width: 600px;
+    width: 100%;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #f3f4f6;
+}
+
+.search-btn {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    bottom: 5px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0 15px;
+    border-radius: 6px;
+    transition: var(--transition-speed);
+}
+
+.search-btn:hover {
+    background: var(--primary-hover);
+}
+
+.header-icons .icon-link {
+    color: var(--dark-color);
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 1.2rem;
+    transition: var(--transition-speed);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.header-icons .icon-link span {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.header-icons .icon-link:hover {
+    color: var(--primary-color);
+}
+
+.main-nav {
+    background: #f9fafb;
+    padding: 15px 0; /* Further reduced from 4px */
+}
+
+.nav-link {
+    color: var(--gray-600) !important;
+    font-weight: 500;
+    margin-right: 25px;
+    transition: var(--transition-speed);
+}
+
+.nav-link:hover {
+    color: var(--primary-color) !important;
+}
+
+.category-dropdown {
+    background: transparent;
+    border: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.order-tracking {
+    color: var(--gray-600);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

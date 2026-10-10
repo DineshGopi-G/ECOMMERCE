@@ -1,0 +1,15 @@
+.form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.form-row label {
+    width: 120px;
+    margin-right: 10px;
+}
+
+.form-row input {
+    width: 250px;   /* 🔥 IMPORTANT */
+}
+

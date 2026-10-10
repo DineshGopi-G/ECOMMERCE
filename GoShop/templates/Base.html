@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoShop - Modern eCommerce Platform</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style -->
+    
+    <link rel="stylesheet" href="{% static 'css/Header-Footer/Header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Header-Footer/Footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Landing_page.css' %}">
+    {% block Favourate_Page_CSS %}
+    {% endblock %}
+    {% block Product_List_Page_CSS %}
+    {% endblock %}
+    {% block Selected_Product_page_CSS %}
+    {% endblock %}
+    {% block contact_css %}
+    {% endblock %}
+
+    <style>
+        body, .page-wrapper {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+    </style>
+</head>
+<body>
+    {% include 'Header.html' %}
+    {% block content %}
+
+    
+    <!--Content-->
+
+    {% endblock %}
+    {% include 'Footer.html' %}
+</body>
+</html>
+
+
+
+
+ 

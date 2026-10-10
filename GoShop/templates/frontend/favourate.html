@@ -1,0 +1,105 @@
+{% extends 'Base.html' %}
+{% block content %}
+
+<!---->
+
+
+<style>
+    .product-card {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+        transition: 0.3s;
+    }
+
+    .product-card:hover {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-img {
+        height: 200px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .heart {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 22px;
+        text-decoration: none;
+    }
+
+    .old-price {
+        color: red;
+        text-decoration: line-through;
+        margin-right: 10px;
+    }
+
+    .new-price {
+        color: green;
+        font-weight: bold;
+    }
+</style>
+{% if no_fav >= 1 %}
+
+<div class="container mt-4">
+
+    <div class="row">
+        {% for i in like_items %}
+
+
+        <!-- Product 1 -->
+        <div class="col-md-3">
+            <div class="product-card p-2">
+
+                <form action="{% url 'toggle_like' i.pro_duct.id %}" method="POST">
+                    {% csrf_token %}
+
+                    <button type="submit" class="heart" style="border:none; background:none; cursor:pointer;">
+                        {% if i.pro_duct.id in liked_product %}
+                        ❤️
+                        {% else %}
+                        🤍
+                        {% endif %}
+                    </button>
+
+                </form>
+                <a href="{% url 'product_page' i.pro_duct.id %}">
+
+
+                <!-- Image -->
+                <img src="{{ i.pro_duct.image.url }}" class="product-img">
+
+                <!-- Name -->
+                <h5 class="text-center mt-2">{{ i.pro_duct.name }}</h5>
+
+                <!-- Price -->
+                <div class="text-center mb-2">
+                    <span class="old-price">{{ i.pro_duct.orginal_price }}</span>
+                    <span class="new-price">{{ i.pro_duct.selling_price }}</span>
+                </div>
+                </a>
+
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% else %}
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <h1 class="fw-bold text-center text-muted">
+        💔 No Favorite Products Found
+    </h1>
+</div>
+
+{% endif %}
+
+
+
+
+{% endblock %}

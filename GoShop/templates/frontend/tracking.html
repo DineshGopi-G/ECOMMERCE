@@ -1,0 +1,31 @@
+{% load static %}
+
+<!-- Floating Tracking Logo -->
+<a href="{% url 'tracking_page' %}" class="floating-tracking">
+    <img src="{% static 'image/tracking.png' %}" alt="Tracking" />
+</a>
+
+<style>
+/* Floating button style */
+.floating-tracking {
+    position: fixed; /* stays fixed on screen */
+    bottom: 20px;    /* distance from bottom (above taskbar) */
+    right: 20px;     /* distance from right edge */
+    z-index: 9999;   /* stay on top of other content */
+    display: block;
+    width: 60px;     /* size of the logo */
+    height: 60px;
+}
+
+.floating-tracking img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.floating-tracking img:hover {
+    transform: scale(1.1); /* small hover effect */
+}
+</style>

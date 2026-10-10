@@ -1,0 +1,45 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block Product_List_Page_CSS %}
+<link rel="stylesheet" href="{% static 'css/Auth_pages.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>Welcome Back</h2>
+            <p>Login to manage your orders and profile</p>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            {% if error %}
+                <div class="alert alert-danger p-2" style="border-radius: 8px; font-size: 0.9rem;">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            <div class="auth-form-group">
+                <label class="auth-label">Username</label>
+                <input type="text" name="username" placeholder="Enter your username" required>
+            </div>
+
+            <div class="auth-form-group">
+                <label class="auth-label">Password</label>
+                <input type="password" name="password" placeholder="Enter your password" required>
+            </div>
+
+            <button type="submit" class="auth-submit-btn">
+                Sign In
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            Don't have an account? <a href="{% url 'signup' %}">Create Account</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

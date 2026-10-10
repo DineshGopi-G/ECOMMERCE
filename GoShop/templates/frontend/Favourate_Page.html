@@ -1,0 +1,67 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block Favourate_Page_CSS %}
+<link rel="stylesheet" href="{% static 'css/Favourate_Page.css' %}">{% endblock %}
+{% block content %}
+
+<!-- Breadcrumb Section -->
+<section class="breadcrumb-section">
+    <div class="custom-container">
+        <div class="breadcrumb-nav">
+            <a href="index.html">Home</a>
+            <i class="fa-solid fa-chevron-right"></i>
+            <span>My Favourites</span>
+        </div>
+    </div>
+</section>
+
+<!-- Favourites Content -->
+<section class="py-5">
+    <div class="custom-container">
+        <!-- <div class="section-title mb-5">
+            <h3>My Wishlist <span class="text-muted small fw-normal">(3 Items)</span></h3>
+        </div> -->
+
+        <div class="row custom-row">
+            <!-- Product 1 -->
+            {% for i in liked_product %}
+            <div class="col-grid-5 mb-4">
+                <div class="product-card" onclick="if (!event.target.closest('form')) location.href='{% url 'Selected_Product' i.pro_duct.id %}'">
+                    <div class="product-img-wrapper">
+                        <form action="{% url 'toggle_like' i.pro_duct.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="wishlist-btn active" title="Remove">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </form> <img src="{{ i.pro_duct.image.url }}" alt="Product" class="product-img img-base"
+                            onerror="this.src='https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=500&q=80'">
+                        <img src="{{ i.pro_duct.image_1.url }}" alt="Product Hover" class="product-img img-hover">
+                        <div class="img-overlay"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">{{ i.pro_duct.name }}</h3>
+                        <p class="product-desc">{{ i.pro_duct.description | truncatewords:5 }}</p>
+                        <div class="rating">
+                            <i class="fa-solid fa-star"></i> 4.7 <span class="text-muted">({{
+                                i.pro_duct.quantity}})</span>
+                        </div>
+                        <div class="price-row">
+                            <div class="price">₹{{ i.pro_duct.selling_price }}</div>
+
+                            {% if i.pro_duct.trending %}
+                            <div class="hot-badge"><i class="fa-solid fa-fire"></i> Hot</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <center>
+                <h4>The Favourate Page was Empty</h4>
+            </center>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

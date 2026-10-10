@@ -1,0 +1,66 @@
+
+{% load static %}
+    <div class="page-wrapper">
+    <!-- Top Header -->
+    <header class="top-header">
+        <div class="custom-container">
+            <div class="row align-items-center">
+                <div class="col-md-2">
+                    <a href="#" class="logo">
+                        <img src="{% static 'image/logo/Logo.png' %}" alt="GoShop Logo" height="40">
+                    </a>
+                </div>
+                <div class="col-md-7">
+                    <form action="{% url 'Searched_item' %}" method="GET" class="search-bar mx-auto">
+                        <input type="text" name="search" value="{{ query|default:'' }}" placeholder="Search products...">
+                        <button type="submit" class="search-btn">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-3">
+                    <div class="header-icons d-flex justify-content-end align-items-center">
+                        <a href="{% url 'favourate_view' %}" class="icon-link position-relative">
+                            <i class="fa-regular fa-heart"></i>
+                            {% if no_fav > 0 %}
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem; padding: 0.25em 0.4em;">
+                                {{ no_fav }}
+                            </span>
+                            {% endif %}
+                        </a>
+                        <a href="{% url 'order_page' %}" class="icon-link"><i class="fa-solid fa-cart-shopping"></i></a>
+                        {% if request.user.is_authenticated %}
+                        <a href="{% url 'logout' %}" class="icon-link">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <span>Logout</span>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="icon-link">
+                            <i class="fa-regular fa-user"></i>
+                            <span>Login</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="custom-container d-flex justify-content-between align-items-center">
+            <div class="nav-links d-flex align-items-center">
+                <button class="category-dropdown me-4">
+                    <i class="fa-solid fa-grip"></i> Category
+                </button> |&nbsp;&nbsp;
+                <a href="{% url 'Home' %}" class="nav-link active">Base</a>
+                <a href="{% url 'Category' %}" class="nav-link">Products</a>
+                <a href="{% url 'contact' %}" class="nav-link">Contact</a>
+            </div>
+            <div class="tracking">
+                <a href="{% url 'tracking_page' %}" class="order-tracking">
+                    <i class="fa-solid fa-truck-fast"></i> Order Tracking
+                </a>
+            </div>
+        </div>
+    </nav>

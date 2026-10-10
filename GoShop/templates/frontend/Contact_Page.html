@@ -1,0 +1,178 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block contact_css %}
+<link rel="stylesheet" href="{% static 'css/Contact_Page.css' %}">
+{% endblock %}
+{% block content %}
+        <!-- Contact Hero -->
+        <section class="contact-hero">
+            <div class="custom-container">
+                <h1>Our teams are here to help</h1>
+                <p>Questions, bug reports, feedback – we’re here for it all.</p>
+            </div>
+        </section>
+
+        {% if messages %}
+        <div class="custom-container mt-4">
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert" style="border-radius: 12px; background: #ECFDF5; border: 1px solid #10B981; color: #065F46;">
+                <i class="fa-solid fa-circle-check me-2"></i> {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Main Support Sections Grid -->
+        <section class="support-grid bg-white">
+            <div class="custom-container">
+                <div class="row">
+                    <!-- Row 1 -->
+                    <div class="col-lg-4 col-md-6 mb-5">
+                        <div class="support-card" data-bs-toggle="modal" data-bs-target="#supportModal">
+                            <h3>Technical support</h3>
+                            <p>Already using our products and experiencing technical issues?</p>
+                            <a href="#" class="support-link">Find helpful resources →</a>
+                            <a href="#" class="support-link">Request deletion of personal data →</a>
+                            <button class="btn-support-pill">Raise a support ticket</button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mb-5">
+                        <div class="support-card" data-bs-toggle="modal" data-bs-target="#supportModal">
+                            <h3>Pricing, billing & licensing</h3>
+                            <p>Have a pricing question or need help managing your account?</p>
+                            <a href="#" class="support-link">Find answers →</a>
+                            <button class="btn-support-pill">Contact us</button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mb-5">
+                        <div class="support-card" data-bs-toggle="modal" data-bs-target="#supportModal">
+                            <h3>App and Product Advice</h3>
+                            <p>Evaluating our products and need advice before you buy?</p>
+                            <a href="#" class="support-link">View demos →</a>
+                            <button class="btn-support-pill">Contact us</button>
+                        </div>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="col-lg-4 col-md-6 mb-5">
+                        <div class="support-card" data-bs-toggle="modal" data-bs-target="#supportModal">
+                            <h3>General inquiries</h3>
+                            <p>Have a question or want to say hi?</p>
+                            <a href="#" class="support-link">GoShop Supplier resources →</a>
+                            <button class="btn-support-pill">Contact us</button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mb-5">
+                        <div class="support-card" data-bs-toggle="modal" data-bs-target="#supportModal">
+                            <h3>Feedback for the CEO</h3>
+                            <p>Let us know how we're doing. Share your thoughts directly with our leadership.</p>
+                            <button class="btn-support-pill">Submit feedback</button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mb-5">
+                        <div class="support-card" data-bs-toggle="modal" data-bs-target="#supportModal">
+                            <h3>Press</h3>
+                            <p>For all media and analyst inquiries. Get our latest press releases and assets.</p>
+                            <a href="#" class="support-link">GoShop press kit →</a>
+                            <button class="btn-support-pill">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support Query Modal (Bootstrap Modal) -->
+        <div class="modal fade" id="supportModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" style="max-width: 650px;">
+                <div class="modal-content overflow-hidden border-0 shadow" style="border-radius: 24px; background: #fff;">
+                    <div class="p-4 p-lg-5" style="position: relative;">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; right: 24px; top: 24px; z-index: 10;"></button>
+                        
+                        <div class="modal-header border-0 p-0 mb-4">
+                            <h5 class="fw-bold" style="font-size: 1.5rem; color: #7C3AED; font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: 1.5px; margin: 0;">Support Query</h5>
+                        </div>
+                        
+                        <form method="POST" action="{% url 'contact' %}">
+                            {% csrf_token %}
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold">Full Name</label>
+                                <div class="form-input-wrapper">
+                                    <input type="text" name="full_name" class="form-control" placeholder="Enter your name" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="form-label fw-bold">Email ID</label>
+                                        <div class="form-input-wrapper">
+                                            <input type="email" name="email" class="form-control" placeholder="name@company.com" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="form-label fw-bold">Mobile Number</label>
+                                        <div class="form-input-wrapper">
+                                            <input type="tel" name="phone" class="form-control" placeholder="+91 000 000 000" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold">Query Type</label>
+                                <div class="form-input-wrapper">
+                                    <select name="query_type" class="form-select" required style="border: none; background: transparent; padding: 10px 14px; width: 100%; border-radius: 8px; font-family: 'Lexend', sans-serif;">
+                                        <option value="Technical support">Technical support</option>
+                                        <option value="Pricing, billing & licensing">Pricing, billing & licensing</option>
+                                        <option value="App and Product Advice">App and Product Advice</option>
+                                        <option value="General inquiries">General inquiries</option>
+                                        <option value="Feedback for the CEO">Feedback for the CEO</option>
+                                        <option value="Press">Press</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="form-label fw-bold">Detailed Query Description</label>
+                                <div class="form-input-wrapper">
+                                    <textarea name="description" class="form-control" placeholder="How can we help you?" required style="height: 100px;"></textarea>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 py-3 fw-bold" style="border-radius: 12px; background: #7C3AED; border: none;">Submit Request</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.support-card');
+    const querySelect = document.querySelector('select[name="query_type"]');
+    
+    cards.forEach(card => {
+        card.addEventListener('click', function() {
+            const h3 = card.querySelector('h3');
+            if (h3 && querySelect) {
+                const headingText = h3.textContent.trim();
+                // Find matching option and select it
+                for (let option of querySelect.options) {
+                    if (option.value === headingText) {
+                        querySelect.value = headingText;
+                        break;
+                    }
+                }
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

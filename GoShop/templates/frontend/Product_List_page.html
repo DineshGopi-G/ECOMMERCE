@@ -1,0 +1,317 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block Product_List_Page_CSS %}
+<link rel="stylesheet" href="{% static 'css/Product_List_page.css' %}">
+
+<style>
+    .filter-link {
+        display: flex;
+        align-items: center;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        color: var(--gray-600);
+        text-decoration: none;
+        transition: 0.2s;
+        cursor: pointer;
+    }
+
+    .filter-link:hover {
+        background: #f1f5f9;
+        color: var(--primary-color);
+    }
+
+    .filter-link.active {
+        color: var(--primary-color);
+        font-weight: 700;
+        background: #f1f5f9;
+    }
+
+    .filter-link.active::before {
+        content: "\f00c";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        margin-right: 8px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Breadcrumb -->
+<section class="breadcrumb-section">
+    <div class="custom-container">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <div class="breadcrumb-nav">
+                <a href="index.html">Home</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <span>Products</span>
+            </div>
+
+            <label for="sidebar-toggle-check"
+                   class="btn-filter-toggle"
+                   style="cursor: pointer;">
+
+                <i class="fa-solid fa-sliders"></i>
+                <span>Toggle Filters</span>
+
+            </label>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- Main Section -->
+<section class="pb-5">
+
+    <div class="custom-container">
+
+        <input type="checkbox"
+               id="sidebar-toggle-check"
+               style="display: none;">
+
+        <div class="products-layout-wrapper" id="productsWrapper">
+
+            <!-- Sidebar -->
+            <aside class="filter-sidebar">
+
+                <div class="filter-widget">
+
+                    <h4 class="filter-title">
+                        Category
+                    </h4>
+
+                    <ul class="filter-list">
+
+                        <!-- All Products -->
+                        <li>
+                            <a href="{% url 'Category' %}"
+                               class="filter-link {% if category_name is None %}active{% endif %}">
+                                All Products
+                            </a>
+                        </li>
+
+                        <!-- Categories -->
+                        {% for i in list %}
+                        <li>
+
+                            <a href="{% url 'product' i.name %}"
+                               class="filter-link {% if i.name == category_name %}active{% endif %}">
+
+                                {{ i.name }}
+
+                            </a>
+
+                        </li>
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+            </aside>
+
+            <!-- Products Area -->
+            <main class="products-grid-area">
+
+                <!-- Sort Bar -->
+                <div class="sort-bar">
+
+                    <div class="results-count">
+                        Showing all products
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3">
+
+                        <span class="results-count">
+                            Sort By:
+                        </span>
+
+                        <div class="dropdown">
+
+                            <button class="btn btn-light dropdown-toggle fw-bold"
+                                    type="button"
+                                    id="sortDropdown"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    style="border-radius: 10px;
+                                           border: 1px solid #e2e8f0;
+                                           padding: 10px 16px;">
+
+                                {% if request.GET.sort == 'low' %}
+                                    Price: Low to High
+
+                                {% elif request.GET.sort == 'high' %}
+                                    Price: High to Low
+
+                                {% elif request.GET.sort == 'hot' %}
+                                    Hot Deals
+
+                                {% else %}
+                                    Default
+
+                                {% endif %}
+
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2"
+                                aria-labelledby="sortDropdown"
+                                style="border-radius: 12px; padding: 8px;">
+
+                                <!-- Default -->
+                                <li>
+                                    <a class="dropdown-item {% if not request.GET.sort %}active{% endif %} rounded-2"
+                                       href="?">
+
+                                        Default
+
+                                    </a>
+                                </li>
+
+                                <!-- Hot -->
+                                <li>
+                                    <a class="dropdown-item {% if request.GET.sort == 'hot' %}active{% endif %} rounded-2"
+                                       href="?sort=hot">
+
+                                        Hot Deals
+
+                                    </a>
+                                </li>
+
+                                <!-- Low -->
+                                <li>
+                                    <a class="dropdown-item {% if request.GET.sort == 'low' %}active{% endif %} rounded-2"
+                                       href="?sort=low">
+
+                                        Price: Low to High
+
+                                    </a>
+                                </li>
+
+                                <!-- High -->
+                                <li>
+                                    <a class="dropdown-item {% if request.GET.sort == 'high' %}active{% endif %} rounded-2"
+                                       href="?sort=high">
+
+                                        Price: High to Low
+
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Product Grid -->
+                <div class="row custom-row" id="productGrid">
+
+                    {% for i in pro %}
+
+                    <div class="col-grid-5 mb-4">
+
+                        <div class="product-card" onclick="location.href='{% url 'Selected_Product' i.id %}'" style="cursor: pointer;">
+
+                            <div class="product-img-wrapper">
+                            <form method="POST" action="{% url 'toggle_like' i.id %}">
+                                {% csrf_token %}
+                            <button type="submit" class="wishlist-btn {% if i.id in liked_products %}is-liked{% endif %}" aria-label="Toggle wishlist" onclick="event.stopPropagation();">
+                                {% if i.id in liked_products %}
+                                <i class="fa-solid fa-heart"></i>
+                                {% else %}
+                                <i class="fa-regular fa-heart"></i>
+                                {% endif %}
+                            </button>
+                            </form>
+
+                                <img src="{{ i.image.url }}"
+                                     alt="Product"
+                                     class="product-img img-base"
+                                     onerror="this.src='https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=500&q=80'">
+
+                                <img src="{{ i.image_1.url }}"
+                                     alt="Hover Product"
+                                     class="product-img img-hover">
+
+                                <div class="img-overlay"></div>
+
+                            </div>
+
+                            <div class="product-info">
+
+                                <h3 class="product-title">
+                                    {{ i.name }}
+                                </h3>
+
+                                <p class="product-desc">
+                                    {{ i.description }}
+                                </p>
+
+                                <div class="rating">
+
+                                    <i class="fa-solid fa-star"></i>
+
+                                    4.7
+
+                                    <span class="text-muted">
+                                        {{ i.quantity }}
+                                    </span>
+
+                                </div>
+
+                                <div class="price-row">
+
+                                    <div class="price">
+                                        ₹{{ i.selling_price }}
+                                    </div>
+
+                                    {% if i.trending == 1 %}
+                                    <div class="hot-badge">
+
+                                        <i class="fa-solid fa-fire"></i>
+                                        Hot
+
+                                    </div>
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    {% empty %}
+
+                    <div class="col-12 text-center py-5">
+
+                        <h4>
+                            No Products Found
+                        </h4>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+</section>
+
+<link rel="stylesheet" href="{% static 'css/Favourate_Page.css' %}">
+
+{% endblock %}

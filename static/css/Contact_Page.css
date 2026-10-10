@@ -1,0 +1,357 @@
+/* ================= CONTACT PAGE STYLING (IMAGE REPLICA) ================= */
+
+:root {
+    --gray-200: #E5E7EB;
+}
+
+.contact-hero {
+    background: #f0f7ff;
+    /* Matches the subtle blue in the image */
+    padding: 80px 0;
+    text-align: center;
+}
+
+.contact-hero h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #172b4d;
+    /* Dark slate from image */
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+}
+
+.contact-hero p {
+    font-size: 1.2rem;
+    color: #42526e;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Support Grid Sections */
+.support-grid {
+    padding: 100px 0;
+}
+
+.support-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 30px;
+    background: var(--white);
+    border-radius: 16px;
+    border: 1px solid transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.support-card:hover {
+    background: #f8fbff;
+    border-color: #d0e2ff;
+    box-shadow: 0 12px 30px rgba(0, 82, 204, 0.08);
+    transform: translateY(-5px);
+}
+
+.support-card h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #172b4d;
+    margin-bottom: 18px;
+    letter-spacing: -0.01em;
+}
+
+.support-card p {
+    font-size: 1.05rem;
+    color: #42526e;
+    line-height: 1.5;
+    margin-bottom: 24px;
+    max-width: 90%;
+}
+
+.support-link {
+    display: block;
+    color: #0052cc;
+    /* Blue link color from image */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 14px;
+    transition: 0.2s;
+}
+
+.support-link:hover {
+    text-decoration: underline;
+    color: #0747a6;
+}
+
+.btn-support-pill {
+    display: inline-block;
+    background: #fff;
+    color: #172b4d;
+    border: 2px solid #42526e;
+    border-radius: 50px;
+    /* Perfect pill shape */
+    padding: 10px 24px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-support-pill:hover {
+    background: #172b4d;
+    color: #fff;
+    border-color: #172b4d;
+    transform: translateY(-2px);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&family=Space+Grotesk:wght@700&display=swap');
+
+/* ================= MODAL STYLING (TWO-COLUMN STRUCTURE) ================= */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(17, 24, 39, 0.4);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.support-modal {
+    background: var(--white);
+    width: 95%;
+    max-width: 900px;
+    /* More compact */
+    border-radius: 16px;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 32px 64px -12px rgba(16, 24, 40, 0.2);
+}
+
+.modal-overlay.active .support-modal {
+    transform: translateY(0);
+}
+
+/* Left Column: Form */
+.modal-form-side {
+    flex: 1;
+    padding: 30px 40px;
+    /* Further reduced padding */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Right Column: Image Showcase */
+.modal-image-side {
+    flex: 1;
+    position: relative;
+    background: var(--light-bg);
+}
+
+.modal-image-side img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-overlay-content {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    right: 40px;
+    color: white;
+    z-index: 2;
+}
+
+.image-overlay-content p {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 24px;
+    line-height: 1.5;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-close {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    /* Move close button to left or ensure it doesn't conflict */
+    background: transparent;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    z-index: 10;
+    /* box-shadow: 0 4px 10px rgba(0,0,0,0.1); */
+}
+
+.modal-header {
+    margin-bottom: 16px;
+    /* Further reduced */
+}
+
+.modal-header h5 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #7C3AED;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.modal-header p {
+    font-family: 'Lexend', sans-serif;
+    color: var(--gray-600);
+    font-size: 1rem;
+}
+
+.form-group {
+    margin-bottom: 12px;
+    /* Further reduced */
+}
+
+.form-input-wrapper {
+    position: relative;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 8px;
+    background: #fcfcfc;
+    transition: 0.2s;
+}
+
+.form-input-wrapper:focus-within {
+    border-color: var(--primary-color);
+    background: var(--white);
+    box-shadow: 0 0 0 4px rgba(17, 24, 39, 0.05);
+}
+
+.form-label {
+    display: block;
+    font-family: 'Lexend', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gray-600);
+    margin-bottom: 6px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 14px;
+    border: none;
+    background: transparent;
+    font-size: 0.95rem;
+    font-family: 'Lexend', sans-serif;
+    color: var(--primary-color);
+}
+
+.form-control:focus {
+    outline: none;
+}
+
+.phone-group {
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+}
+
+.flag-box {
+    display: flex;
+    align-items: center;
+    border-right: 1.5px solid var(--gray-200);
+    padding-right: 10px;
+    margin-right: 10px;
+}
+
+.flag-box img {
+    width: 20px;
+    height: 14px;
+    border-radius: 2px;
+}
+
+.query-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+    /* Reduced */
+}
+
+.query-card {
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 12px;
+    /* Reduced from 16px */
+    cursor: pointer;
+    transition: 0.2s;
+    position: relative;
+}
+
+.query-card.active {
+    border-color: #10b981;
+    background: #f0fdf4;
+}
+
+.query-card-title {
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.query-card-desc {
+    font-size: 0.75rem;
+    color: var(--gray-600);
+}
+
+.btn-submit {
+    width: 100%;
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 12px;
+    /* Reduced */
+    border-radius: 8px;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-top: 16px;
+    /* Reduced from 20px */
+    cursor: pointer;
+}
+
+/* Responsive Grid Adjustments */
+@media (max-width: 992px) {
+    .support-modal {
+        flex-direction: column;
+        max-width: 550px;
+        min-height: auto;
+    }
+
+    .modal-image-side {
+        height: 250px;
+    }
+
+    .modal-form-side {
+        padding: 40px 30px;
+    }
+}

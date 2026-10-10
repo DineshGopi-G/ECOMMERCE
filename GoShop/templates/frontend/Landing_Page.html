@@ -1,0 +1,330 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/Landing_page.css' %}">
+{% endblock %}
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero-section pb-0">
+    <div class="custom-container">
+        <div class="row align-items-stretch">
+            <!-- Left Section (8 Columns) -->
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <div class="hero-left-box" id="heroLeft">
+                    <!-- Large Slide Images -->
+                    <div class="hero-banner active" data-slide="1"
+                        style="background-image: url('{% static 'image/Iphone1.png' %}')">
+                    </div>
+                    <div class="hero-banner" data-slide="2"
+                        style="background-image: url('{% static 'image/Fornuture1.png' %}')">
+                    </div>
+                    <div class="hero-banner" data-slide="3"
+                        style="background-image: url('{% static 'image/Shoes1.png' %}')">
+                    </div>
+
+                    <!-- Slider Buttons -->
+                    <div class="hero-nav-btns">
+                        <button class="hero-nav-btn active"></button>
+                        <button class="hero-nav-btn"></button>
+                        <button class="hero-nav-btn"></button>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Section (4 Columns) -->
+            <div class="col-lg-4">
+                <div class="hero-right-box" id="heroRight">
+                    <!-- Small Synchronized Images -->
+                    <div class="hero-banner active" data-slide="1"
+                        style="background-image: url('{% static 'image/Iphone-Box1.png' %}'); background-color: #f3f4f6;">
+                    </div>
+                    <div class="hero-banner" data-slide="2"
+                        style="background-image: url('{% static 'image/Fornuture-Box1.png' %}'); background-color: #e5e7eb;">
+                    </div>
+                    <div class="hero-banner" data-slide="3"
+                        style="background-image: url('{% static 'image/Shoe-Box1.png' %}'); background-color: #d1d5db;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Popular Categories -->
+<section class="category-section">
+    <div class="custom-container">
+        <div class="section-title">
+            <h3>Explore Popular Category</h3>
+            <a href="" class="view-all">
+                <h6>View All</h6>
+            </a>
+        </div>
+
+        <div class="category-carousel-container">
+            <button class="carousel-nav-btn prev" onclick="scrollCategories(-1)">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div class="category-carousel-track" id="categoryCarousel">
+                {% for i in list_Category %}
+                <a href="{% url 'product' i.name %}" style='text-decoration: none;' ><div class="category-item-card">
+                    <div class="category-icon-box">
+                        <img src="{{ i.image.url }}" alt="Home Decor">
+                    </div>
+                    <div class="category-title" >{{ i.name }}</div>
+                </div>
+                </a>
+                {% empty %}
+                <div class="d-flex justify-content-center my-5">
+                    <div class="card text-center shadow-sm p-4" style="max-width: 400px;">
+
+                        <div class="card-body">
+                            <h4 class="card-title text-warning">No Products Found 😕</h4>
+                            <p class="card-text text-muted">
+                                Please check back later or try another category.
+                            </p>
+
+                            <a href="/" class="btn btn-primary mt-2">
+                                Go Home
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+            <button class="carousel-nav-btn next" onclick="scrollCategories(1)">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Promotional Banners (Single Row) -->
+<section class="promo-section-frame">
+    <div class="custom-container">
+        <div class="promo-grid-container">
+            <!-- Single Row: Balanced 6-3-3 alignment -->
+            <div class="row h-100">
+                <div class="col-lg-6 col-md-6 h-100 mb-3 mb-md-0">
+                    <div class="promo-box h-100">
+                        <img src="{% static 'image/cake1.png' %}" alt="Promo"
+                            onerror="this.src='https://placehold.co/800x400/fce7f3/333?text=Milk+Tea+Banner'">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 h-100 mb-3 mb-md-0">
+                    <div class="promo-box h-100">
+                        <img src="{% static 'image/sub2-tea.png' %}" alt="Promo"
+                            onerror="this.src='https://placehold.co/400x400/fef3c7/333?text=Coffee'">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 h-100">
+                    <div class="promo-box h-100">
+                        <img src="{% static 'image/sub-cake.png' %}" alt="Promo"
+                            onerror="this.src='https://placehold.co/400x400/dcfce7/333?text=My+Favorites'">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Brand Section (CSS-only Infinite Scroll) -->
+<section class="brand-section">
+    <div class="brand-scroll-track" id="brandTrack">
+        <!-- Manual clones to ensure zero-gap scroll without JS -->
+        <img src="{% static 'image/banner/samsung.png' %}" alt="Samsung" class="brand-logo">
+        <img src="{% static 'image/banner/phlips.png' %}" alt="Philips" class="brand-logo">
+        <img src="{% static 'image/banner/nuteralla.png' %}" alt="Nutella" class="brand-logo">
+        <img src="{% static 'image/banner/puma.png' %}" alt="Puma" class="brand-logo">
+        <img src="{% static 'image/banner/nike.png' %}" alt="Nike" class="brand-logo">
+        <!-- Clone 1 -->
+        <img src="{% static 'image/banner/samsung.png' %}" alt="Samsung" class="brand-logo">
+        <img src="{% static 'image/banner/phlips.png' %}" alt="Philips" class="brand-logo">
+        <img src="{% static 'image/banner/nuteralla.png' %}" alt="Nutella" class="brand-logo">
+        <img src="{% static 'image/banner/puma.png' %}" alt="Puma" class="brand-logo">
+        <img src="{% static 'image/banner/nike.png' %}" alt="Nike" class="brand-logo">
+        <!-- Clone 2 -->
+        <img src="{% static 'image/banner/samsung.png' %}" alt="Samsung" class="brand-logo">
+        <img src="{% static 'image/banner/phlips.png' %}" alt="Philips" class="brand-logo">
+        <img src="{% static 'image/banner/nuteralla.png' %}" alt="Nutella" class="brand-logo">
+        <img src="{% static 'image/banner/puma.png' %}" alt="Puma" class="brand-logo">
+        <img src="{% static 'image/banner/nike.png' %}" alt="Nike" class="brand-logo">
+        <!-- Clone 3 -->
+        <img src="{% static 'image/banner/samsung.png' %}" alt="Samsung" class="brand-logo">
+        <img src="{% static 'image/banner/phlips.png' %}" alt="Philips" class="brand-logo">
+        <img src="{% static 'image/banner/nuteralla.png' %}" alt="Nutella" class="brand-logo">
+        <img src="{% static 'image/banner/puma.png' %}" alt="Puma" class="brand-logo">
+        <img src="{% static 'image/banner/nike.png' %}" alt="Nike" class="brand-logo">
+    </div>
+</section>
+
+<!-- Trending Products -->
+<section class="py-5">
+    <div class="custom-container">
+        <div class="section-title" style="margin-bottom: 30px;">
+           <center> <h3>Trending Products</h3></center>
+        </div>
+        <div class="row custom-row">
+            <!-- Product 1 -->
+            {% for i in hot %}
+                <div class="col-grid-5 mb-4">
+                    <div class="product-card" onclick="if (!event.target.closest('form')) location.href='{% url 'Selected_Product' i.id %}'">
+                        <div class="product-img-wrapper">
+                            <form method="POST" action="{% url 'toggle_like' i.id %}">
+                                {% csrf_token %}
+                            <button class="wishlist-btn {% if i.id in liked_products %}is-liked{% endif %}" aria-label="Toggle wishlist">
+                                {% if i.id in liked_products %}
+                                <i class="fa-solid fa-heart"></i>
+                                {% else %}
+                                <i class="fa-regular fa-heart"></i>
+                                {% endif %}
+                            </button>
+                            </form>
+                            <img src="{{ i.image.url }}" alt="Product" class="product-img img-base"
+                                onerror="this.src='https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=500&q=80'">
+                            <img src="{{ i.image_1.url }}" 
+                                alt="Product Hover" class="product-img img-hover">
+                            <div class="img-overlay"></div>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">{{ i.name }}</h3>
+                            <p class="product-desc">{{ i.description|truncatewords:3 }}</p>
+                            <div class="rating">
+                                <i class="fa-solid fa-star"></i> 4.7 <span class="text-muted">({{ i.quantity }})</span>
+                            </div>
+                            <div class="price-row">
+                                <div class="price">₹{{ i.selling_price }}</div>
+                                <div class="hot-badge"><i class="fa-solid fa-fire"></i> Hot</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {% empty %}
+            <div class="d-flex justify-content-center my-5">
+                <div class="card text-center shadow-sm p-4" style="max-width: 400px;">
+
+                    <div class="card-body">
+                        <h4 class="card-title text-warning">No Products Found 😕</h4>
+                        <p class="card-text text-muted">
+                            Please check back later
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            {% endfor%}
+        </div>
+    </div>
+</section>
+
+
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+    <div class="custom-container">
+        <div class="testimonial-header text-center mb-5">
+            <span class="testimonial-subtitle">FEEDBACK</span>
+            <h2 class="testimonial-main-title">THEY TRUSTED US</h2>
+        </div>
+
+        <div class="testimonial-carousel-container">
+            <button class="carousel-nav-btn prev" onclick="scrollTestimonials(-1)">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <div class="testimonials-track" id="testimonialTrack">
+                <!-- Slide 1 -->
+                {% for i in ft %}
+                <div class="testimonial-slide">
+                    <div class="quote-content">
+                        <i class="fa-solid fa-quote-left quote-icon-start"></i>
+                        <p>{{ i.testimonial }}</p>
+                        <i class="fa-solid fa-quote-right quote-icon-end"></i>
+                    </div>
+                    <div class="brand-rating text-center">
+                        <!-- <h6>James</h6> -->
+                        <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/HP_logo_2012.svg/1024px-HP_logo_2012.svg.png" alt="HP" height="30" class="brand-logo mb-3"> -->
+                        <!-- <div class="stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div> -->
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <button class="carousel-nav-btn next" onclick="scrollTestimonials(1)">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+
+<!-- Service Features Section -->
+<section class="service-features-section">
+    <div class="custom-container">
+        <div class="row g-4">
+            <!-- Feature 1 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-shop"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4>Free in-store pick up</h4>
+                        <p>24/7 Amazing services</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Feature 2 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4>Free Shipping</h4>
+                        <p>24/7 Amazing services</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Feature 3 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4>Flexible Payment</h4>
+                        <p>24/7 Amazing services</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Feature 4 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4>Convenient help</h4>
+                        <p>24/7 Amazing services</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,168 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block Product_List_Page_CSS %}
+<link rel="stylesheet" href="{% static 'css/cart_page.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="cart-section">
+    <div class="custom-container">
+        <!-- Breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'Home' %}" style="text-decoration: none; color: #64748b;">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'Category' %}" style="text-decoration: none; color: #64748b;">Products</a></li>
+                <li class="breadcrumb-item active" aria-current="page" style="color: #7c3aed; font-weight: 500;">Shopping Cart</li>
+            </ol>
+        </nav>
+
+        <h1 class="fw-bold mb-5" style="color: #1e293b; letter-spacing: -1px;">Shopping Cart</h1>
+
+        {% if products_order %}
+        <div class="cart-grid">
+            <!-- Left Column: Items and Shipping -->
+            <div class="cart-left-column">
+                
+                <!-- Cart Items Card -->
+                <div class="cart-card">
+                    <h3 class="fw-bold mb-4" style="font-size: 1.3rem;">Items in your cart</h3>
+                    <div class="cart-items-list">
+                        {% for i in products_order %}
+                        <div class="cart-item">
+                            <div class="item-img">
+                                <img src="{{ i.pro.image.url }}" alt="{{ i.pro.name }}">
+                            </div>
+                            <div class="item-info">
+                                <h4 class="item-name">{{ i.pro.name }}</h4>
+                                <div class="item-price">₹{{ i.pro.selling_price }}</div>
+                                <div class="item-qty mt-1">Quantity: {{ i.cart_quantity }}</div>
+                            </div>
+                            <div class="item-total-price me-4">
+                                <span class="fw-bold" style="color: #1e293b;">₹{{ i.item_total }}</span>
+                            </div>
+                            <a href="{% url 'cart_delete' i.id %}" class="remove-btn" title="Remove item">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Shipping Details Card (Initially Hidden) -->
+                <div class="shipping-card" id="shippingSection" style="display: none; margin-top: 20px; animation: slideDown 0.4s ease-out;">
+                    <h3><i class="fa-solid fa-truck-fast" style="color: #7c3aed;"></i> Shipping Details</h3>
+                    <form method="POST" action="{% url 'sheping_View' %}" id="checkoutForm">
+                        {% csrf_token %}
+                        <div class="shipping-grid">
+                            <div class="form-group full-width">
+                                <label>Full Name</label>
+                                <input type="text" name="full_name" placeholder="Enter your full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" name="email" placeholder="email@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="text" name="phone" placeholder="+91 00000 00000" required>
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Detailed Address</label>
+                                <textarea name="address" rows="3" placeholder="House No, Street, Locality..." required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" name="city" placeholder="City" required>
+                            </div>
+                            <div class="form-group">
+                                <label>State</label>
+                                <input type="text" name="state" placeholder="State" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Pin Code</label>
+                                <input type="text" name="pin_code" placeholder="600001" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Country</label>
+                                <input type="text" name="country" placeholder="India" required>
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Landmark (Optional)</label>
+                                <input type="text" name="landmark" placeholder="Near by place...">
+                            </div>
+                        </div>
+                        <button type="submit" class="place-order-btn mt-4">
+                            Confirm & Place Order <i class="fa-solid fa-check-double ms-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Column: Summary -->
+            <div class="cart-right-column">
+                <div class="summary-card">
+                    <h3>Order Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>₹{{ total }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping Fee</span>
+                        <span class="text-success fw-bold">FREE</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Estimated Tax</span>
+                        <span>₹0</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span>₹{{ total }}</span>
+                    </div>
+
+                    <button type="button" id="proceedBtn" class="place-order-btn" onclick="showShipping()">
+                        Proceed to Checkout <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </button>
+
+                    <div class="text-center mt-4">
+                        <p class="text-muted small mb-0">
+                            <i class="fa-solid fa-shield-halved me-2"></i> Secure Checkout
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <!-- Empty State -->
+        <div class="empty-cart card border-0 shadow-sm rounded-4">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <h2 class="fw-bold">Your cart is empty</h2>
+            <p class="text-muted mb-4">Looks like you haven't added anything to your cart yet.</p>
+            <a href="{% url 'Category' %}" class="btn btn-primary px-5 py-3 rounded-pill fw-bold" style="background: #7c3aed; border: none;">
+                Continue Shopping
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<style>
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<script>
+    function showShipping() {
+        const shippingSection = document.getElementById('shippingSection');
+        const proceedBtn = document.getElementById('proceedBtn');
+        
+        shippingSection.style.display = 'block';
+        proceedBtn.style.display = 'none';
+        
+        // Smooth scroll to shipping section
+        shippingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+</script>
+{% endblock %}

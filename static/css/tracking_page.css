@@ -1,0 +1,195 @@
+/* ================= TRACKING UI PREMIUM STYLING ================= */
+
+.tracking-section {
+    background-color: #f8fafc;
+    padding: 60px 0;
+    min-height: 100vh;
+}
+
+.tracking-card {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    overflow: hidden;
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tracking-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+}
+
+.tracking-product-img {
+    height: 100%;
+    min-height: 200px;
+    background: #f8fafc;
+    position: relative;
+    overflow: hidden;
+}
+
+.tracking-product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.tracking-details-content {
+    padding: 25px !important;
+}
+
+/* Stepper logic */
+.stepper-wrapper {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin: 25px 0;
+    padding: 0 5px;
+}
+
+.stepper-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 18px;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: #e2e8f0;
+    z-index: 1;
+}
+
+.stepper-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    z-index: 2;
+}
+
+.step-counter {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #94a3b8;
+    transition: 0.3s;
+}
+
+.step-name {
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Step States */
+.stepper-item.completed .step-counter {
+    background: #10b981;
+    border-color: #10b981;
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+}
+
+.stepper-item.completed .step-name {
+    color: #10b981;
+}
+
+.stepper-item.active .step-counter {
+    background: #7c3aed;
+    border-color: #7c3aed;
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+    transform: scale(1.1);
+}
+
+.stepper-item.active .step-name {
+    color: #7c3aed;
+}
+
+/* Action buttons */
+.btn-cancel-mini {
+    background: #fff1f2;
+    color: #f43f5e;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.btn-cancel-mini:hover {
+    background: #f43f5e;
+    color: #ffffff;
+}
+
+.user-info-mini {
+    font-size: 0.85rem;
+    color: #475569;
+}
+
+.meta-info-bar {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #64748b;
+    border: 1px solid #f1f5f9;
+}
+
+/* Cancelled State Styles */
+.is-cancelled {
+    justify-content: center !important;
+}
+
+.is-cancelled::before {
+    display: none;
+}
+
+.cancelled-badge {
+    background: #fff1f2;
+    color: #f43f5e;
+    padding: 12px 30px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    border: 1px dashed #f43f5e;
+    animation: shake 0.5s ease-in-out;
+}
+
+.tracking-card.is-cancelled-card {
+    filter: grayscale(1);
+    opacity: 0.8;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.empty-state {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    color: #e2e8f0;
+    margin-bottom: 25px;
+}

@@ -1,0 +1,167 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block Selected_Product_page_CSS %}
+<link rel="stylesheet" href="{% static 'css/Selected_Product_page.css' %}">
+{% endblock %}
+
+{% block content %}
+    <!-- Breadcrumb -->
+    <section class="breadcrumb-section py-2">
+        <div class="custom-container">
+            <div class="breadcrumb-nav">
+                <a href="{% url 'Home' %}">Home</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <a href="{% url 'Category' %}">Products</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <span id="breadcrumbProductName">{{ product.name }}</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Detail Content -->
+     
+    <section class="product-detail-wrapper">
+        <div class="custom-container">
+            <div class="product-detail-container">
+                
+                <!-- Left: Gallery -->
+                <div class="product-gallery">
+                    <div class="main-img-container">
+                        <img id="detailImg" src="{{ product.image.url }}" alt="{{ product.name }}">
+                    </div>
+                    <div class="thumb-gallery">
+                        <img src="{{ product.image.url }}" class="thumb-img active" onclick="swapImg(this)">
+                        <!-- Placeholder thumbs - you can make these dynamic if your model supports multiple images -->
+                        <img src="{{ product.image_1.url }}" class="thumb-img" onclick="swapImg(this)">
+                        <img src="{{ product.image_2.url }}" class="thumb-img" onclick="swapImg(this)">
+                        <img src="{{ product.image_3.url }}" class="thumb-img" onclick="swapImg(this)">
+                    </div>
+                </div>
+
+                <!-- Right: Info -->
+                <div class="product-info-column">
+                    <span class="product-category-tag">{{ product.category.name }}</span>
+                    <h1 class="detail-title">{{ product.name }}</h1>
+                    
+                    <div class="detail-rating">
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star-half-stroke"></i>
+                        </div>
+                        <span class="review-count">(120 Reviews)</span>
+                    </div>
+
+                    <div class="detail-price-row">
+                        <span class="current-price">₹{{ product.selling_price }}</span>
+                        <span class="old-price">₹{{ product.orginal_price }}</span>
+                    </div>
+
+                    <p class="detail-desc">
+                        {{ product.description }}
+                    </p>
+
+                        <div class="action-controls">
+                            <form method="POST" action="{% url 'add_Cart' product.id %}" style="display: flex; gap: 15px; align-items: center;">
+                                {% csrf_token %}
+                                <div class="quantity-selector">
+                                    <button type="button" class="qty-btn" onclick="updateQty(-1)">-</button>
+                                    <input type="text" name="quantity" class="qty-input" value="1" id="qtyInput" readonly>
+                                    <button type="button" class="qty-btn" onclick="updateQty(1)">+</button>
+                                </div>
+                                <button type="submit" class="btn-add-cart">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                    Add to Cart
+                                </button>
+                            </form>
+
+                            <form method="POST" action="{% url 'toggle_like' product.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-wishlist-detail {% if product.id in liked_products %}is-liked{% endif %}">
+                                    {% if product.id in liked_products %}
+                                    <i class="fa-solid fa-heart"></i>
+                                    {% else %}
+                                    <i class="fa-regular fa-heart"></i>
+                                    {% endif %}
+                                </button>
+                            </form>
+                        </div>
+
+                    <div class="product-meta mt-3 pt-3 border-top">
+                        <p class="mb-1"><strong>Availability:</strong> 
+                            {% if product.quantity > 0 %}
+                            <span class="text-success">In Stock ({{ product.quantity }} available)</span>
+                            {% else %}
+                            <span class="text-danger">Out of Stock</span>
+                            {% endif %}
+                        </p>
+                        <p class="mb-0"><strong>Tags:</strong> Premium, Latest, {% if product.trending %}Trending{% endif %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products Section -->
+    <section class="related-products-section py-5">
+        <div class="custom-container">
+            <div class="section-title">
+                <h3>Related Products</h3>
+            </div>
+            <div class="row custom-row">
+                {% for i in related %}
+                <div class="col-grid-5 mb-4">
+                    <div class="related-card" onclick="location.href='{% url 'Selected_Product' i.id %}'">
+                        <div class="related-img-container">
+                            <form method="POST" action="{% url 'toggle_like' i.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="related-wishlist-btn {% if i.id in liked_products %}is-liked{% endif %}" onclick="event.stopPropagation();">
+                                    {% if i.id in liked_products %}
+                                    <i class="fa-solid fa-heart"></i>
+                                    {% else %}
+                                    <i class="fa-regular fa-heart"></i>
+                                    {% endif %}
+                                </button>
+                            </form>
+                            <img src="{{ i.image.url }}" class="related-img-base">
+                            <div class="related-overlay"></div>
+                        </div>
+                        <div class="related-info">
+                            <h3 class="related-title">{{ i.name }}</h3>
+                            <div class="related-price-row">
+                                <div class="related-price">₹{{ i.selling_price }}</div>
+                                {% if i.trending == 1 %}
+                                <div class="related-hot-badge">Hot</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">No related products found.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function swapImg(element) {
+            document.getElementById('detailImg').src = element.src;
+            const thumbs = document.querySelectorAll('.thumb-img');
+            thumbs.forEach(img => img.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        function updateQty(change) {
+            const input = document.getElementById('qtyInput');
+            let val = parseInt(input.value) + change;
+            if (val < 1) val = 1;
+            input.value = val;
+        }
+    </script>
+{% endblock %}

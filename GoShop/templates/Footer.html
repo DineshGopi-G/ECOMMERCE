@@ -1,0 +1,106 @@
+{% load static %}
+<!-- Footer -->
+<footer class="footer">
+    <div class="custom-container">
+        <div class="row align-items-center">
+            <div class="col-md-3">
+                <img src="{% static 'image/logo/Logo.png' %}" alt="GoShop Logo" class="footer-logo" height="30"
+                    onerror="this.src='https://placehold.co/120x40/white/7C3AED?text=GoShop'">
+            </div>
+            <div class="col-md-6 text-center footer-links">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Products</a>
+                <a href="{% url 'contact' %}">Contact</a>
+            </div>
+            <div class="col-md-3 text-end social-icons">
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="copyright">
+            <P>This web application is developed solely for educational purposes. It is created as part of a learning
+                project to practice modern web development technologies. The content and features are for demonstration
+                only and not for commercial use. Any resemblance to real brands or products is purely coincidental, and
+                no ownership or association is claimed.</P>
+            &copy; 2026 GoShop.
+        </div>
+    </div>
+</footer>
+</div>
+
+
+<!-- Bootstrap 5 JS Bundle -->
+
+
+<!-- Interactive Features Logic (Optimized) -->
+<script>
+    // --- 1. Synchronized Hero Auto-Slider ---
+    let currentHeroSlide = 1;
+    const totalHeroSlides = 3;
+    let heroInterval;
+
+    function switchHero(slideNum) {
+        currentHeroSlide = slideNum;
+        
+        // Sync Left Box
+        const leftBanners = document.querySelectorAll('#heroLeft .hero-banner');
+        leftBanners.forEach(b => b.classList.remove('active'));
+        const targetLeft = document.querySelector(`#heroLeft .hero-banner[data-slide="${slideNum}"]`);
+        if (targetLeft) targetLeft.classList.add('active');
+
+        // Sync Right Box
+        const rightBanners = document.querySelectorAll('#heroRight .hero-banner');
+        rightBanners.forEach(b => b.classList.remove('active'));
+        const targetRight = document.querySelector(`#heroRight .hero-banner[data-slide="${slideNum}"]`);
+        if (targetRight) targetRight.classList.add('active');
+
+        // Update Nav Dots
+        const btns = document.querySelectorAll('.hero-nav-btn');
+        btns.forEach((b, idx) => {
+            b.classList.toggle('active', idx + 1 === slideNum);
+            // Add click listener if missing
+            if (!b.onclick) {
+                b.onclick = () => {
+                    clearInterval(heroInterval); // Stop auto-play on manual click
+                    switchHero(idx + 1);
+                };
+            }
+        });
+    }
+
+    function startHeroAutoPlay() {
+        heroInterval = setInterval(() => {
+            currentHeroSlide = (currentHeroSlide % totalHeroSlides) + 1;
+            switchHero(currentHeroSlide);
+        }, 4000); // 4-second delay
+    }
+
+    // --- 2. Category Carousel Scroll ---
+    function scrollCategories(direction) {
+    const container = document.getElementById("categoryCarousel");
+
+    container.scrollBy({
+        left: direction * 160,
+        behavior: "smooth"
+    });
+  }
+    // --- 3. Testimonial Carousel Scroll ---
+    function scrollTestimonials(direction) {
+        const track = document.getElementById('testimonialTrack');
+        if (!track) return;
+        const slideWidth = track.firstElementChild.offsetWidth;
+        track.scrollBy({ left: direction * slideWidth, behavior: 'smooth' });
+    }
+
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initialize Hero
+        switchHero(1);
+        startHeroAutoPlay();
+    });
+</script>
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
