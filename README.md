@@ -1,4 +1,4 @@
-<h1 align="center">𝐅𝐔𝐋𝐋-𝐒𝐓𝐀𝐂𝐊 𝐄𝐂𝐎𝐌𝐌𝐄𝐑𝐂𝐄 𝐏𝐋𝐀𝐓𝐅𝐎𝐑𝐌</h1>
+<h1 align="center">𝐅𝐮𝐥𝐥-𝐒𝐭𝐚𝐜𝐤-𝐄𝐜𝐨𝐦𝐦𝐞𝐫𝐜𝐞-𝐏𝐥𝐚𝐭𝐟𝐨𝐫𝐦</h1>
 
 <p align="center">
   <img src="Source/logo.png" alt="GoShop Logo" width="500"/>
@@ -32,6 +32,95 @@
 </p>
 
 <br>
+
+---
+
+<h2 align="center">🚀 𝐅𝐄𝐀𝐓𝐔𝐑𝐄𝐒</h2>
+
+<p align="center"><i>Everything you need to run a modern online store — from browsing to doorstep delivery. ✨</i></p>
+
+<table align="center">
+  <tr>
+    <td valign="top">
+      <h3>👤 𝐔𝐬𝐞𝐫 𝐀𝐜𝐜𝐨𝐮𝐧𝐭 𝐌𝐚𝐧𝐚𝐠𝐞𝐦𝐞𝐧𝐭</h3>
+      <ul>
+        <li>🔐 User Registration, Login, and Logout</li>
+        <li>👤 Profile Management and Password Updates</li>
+        <li>🔒 Secure Authentication and Access Control</li>
+      </ul>
+    </td>
+    <td valign="top">
+      <h3>🛍️ 𝐏𝐫𝐨𝐝𝐮𝐜𝐭 𝐌𝐚𝐧𝐚𝐠𝐞𝐦𝐞𝐧𝐭</h3>
+      <ul>
+        <li>📦 Browse and View Product Details</li>
+        <li>🔍 Search Products by Name</li>
+        <li>🎯 Filter and Organize Products by Category</li>
+        <li>✏️ Create, Read, Update, and Delete (CRUD) Operations</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <h3>🛒 𝐒𝐡𝐨𝐩𝐩𝐢𝐧𝐠 𝐂𝐚𝐫𝐭</h3>
+      <ul>
+        <li>➕ Add Products to Cart</li>
+        <li>➖ Remove Products from Cart</li>
+        <li>🔢 Update Product Quantities</li>
+        <li>💰 Automatic Price and Total Calculation</li>
+      </ul>
+    </td>
+    <td valign="top">
+      <h3>❤️ 𝐖𝐢𝐬𝐡𝐥𝐢𝐬𝐭</h3>
+      <ul>
+        <li>💖 Add Products to Wishlist</li>
+        <li>🗑️ Remove Products from Wishlist</li>
+        <li>🛍️ Easily Manage Favorite Products</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <h3>📦 𝐎𝐫𝐝𝐞𝐫 𝐌𝐚𝐧𝐚𝐠𝐞𝐦𝐞𝐧𝐭</h3>
+      <ul>
+        <li>🧾 Place and Manage Orders</li>
+        <li>📋 View Order History and Order Details</li>
+        <li>🚚 Track Order Status and Delivery Progress</li>
+        <li>🔄 Update Order Status</li>
+        <li>💵 Calculate Order Totals</li>
+      </ul>
+    </td>
+    <td valign="top">
+      <h3>💳 𝐂𝐡𝐞𝐜𝐤𝐨𝐮𝐭</h3>
+      <ul>
+        <li>📍 Manage Shipping Information</li>
+        <li>🧮 Review Cart Items and Final Order Amount</li>
+        <li>✅ Confirm Orders Before Placement</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <h3>⭐ 𝐏𝐫𝐨𝐝𝐮𝐜𝐭 𝐑𝐞𝐯𝐢𝐞𝐰𝐬</h3>
+      <ul>
+        <li>🌟 Submit Product Ratings and Reviews</li>
+        <li>📖 View Customer Feedback</li>
+      </ul>
+    </td>
+    <td valign="top">
+      <h3>🛠️ 𝐀𝐝𝐦𝐢𝐧 𝐃𝐚𝐬𝐡𝐛𝐨𝐚𝐫𝐝</h3>
+      <ul>
+        <li>📊 Manage Products and Categories</li>
+        <li>➕ Add, ✏️ Update, and 🗑️ Delete Products</li>
+        <li>👥 Manage User Accounts</li>
+        <li>📦 View and Manage Customer Orders</li>
+        <li>🔄 Update Order and Delivery Status</li>
+        <li>📈 Monitor Product Inventory and Stock Levels</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+<p align="center"><b>🛒 Shop smart &nbsp;•&nbsp; 💖 Save favorites &nbsp;•&nbsp; 🚚 Track every order</b></p>
 
 ---
 
